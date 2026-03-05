@@ -1,0 +1,30 @@
+name: weekly-strategy-run
+on:
+  schedule:
+    - cron: '0 13 * * 1'
+  workflow_dispatch:
+jobs:
+  run-weekly:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install backend deps
+        run: |
+          cd backend
+          pip install -r requirements.txt
+      - name: Seed and run weekly tasks
+        run: |
+          cd backend
+          python scripts/seed_demo_data.py
+          python - <<'PY'
+from app.strategy.layer1_macro import compute_macro_state
+print(compute_macro_state())
+PY
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-outputs
+          path: backend/project100x.db
