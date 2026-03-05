@@ -129,3 +129,27 @@ docker compose up --build
 ## 自动化任务（可选）
 - `.github/workflows/weekly.yml` 每周触发示例（重算宏观、产出数据库artifact）
 
+
+
+## 部署到新仓库（GitHub）
+
+```bash
+# 在本地执行（有外网和GitHub权限）
+git remote add etf https://github.com/53Wusan/ETF.git
+git push -u etf work:main
+```
+
+若目标仓库已有历史且需覆盖，可改用：
+```bash
+git push -u etf work:main --force-with-lease
+```
+
+若当前环境无法连通 GitHub，可先导出 bundle，在可联网机器导入后推送：
+```bash
+git bundle create project100x_mvp.bundle --all
+# 另一台机器
+git clone project100x_mvp.bundle ETF
+cd ETF
+git remote add origin https://github.com/53Wusan/ETF.git
+git push -u origin main
+```
