@@ -1,0 +1,12 @@
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+sqlalchemy==2.0.35
+pydantic==2.9.2
+python-dotenv==1.0.1
+pandas==2.2.3
+numpy==2.1.1
+yfinance==0.2.44
+requests==2.32.3
+apscheduler==3.10.4
+backtesting==0.3.3
+python-multipart==0.0.9
